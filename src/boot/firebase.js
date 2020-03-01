@@ -20,8 +20,7 @@ import "firebase/database";
   };
   // Initialize Firebase
   let firebaseApp = firebase.initializeApp(firebaseConfig);
+  let firebaseAuth = firebaseApp.auth()
+  let firebaseDb = firebaseApp.database()
 
-  let firebaseAuth = firebase.auth()
-  let firebaseDb = firebase.database()
-
-  export { firebaseAuth, firebaseDb }
+export { firebaseAuth, firebaseDb }
