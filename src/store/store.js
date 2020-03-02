@@ -93,7 +93,9 @@ const actions = {
         })
     },
     firebaseUpdateUser({}, payload) {
+        if (payload.userId) {
         firebaseDb.ref('users/' + payload.userId).update(payload.updates)
+        }
     },
     firebaseGetUsers({ commit }) {
         firebaseDb.ref('users').on('child_added', snapshot => {
