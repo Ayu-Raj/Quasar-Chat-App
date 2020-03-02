@@ -14,6 +14,7 @@
           {{ title }}
         </q-toolbar-title>
       <q-btn  
+        v-if="!userDetails.userId"
         to="/auth"
         class="absolute-right q-pr-sm"
         icon="account_circle" 
@@ -22,6 +23,17 @@
         flat
         label="Login" />
 
+      <q-btn  
+        v-else
+        @click="logoutUser"
+        class="absolute-right q-pr-sm"
+        icon="account_circle" 
+        no-caps
+        dense
+        flat>
+      Logout<br/>
+      {{ userDetails.name}}
+      </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -35,15 +47,25 @@
 
 <script>
 import EssentialLink from 'components/EssentialLink'
-
+import {mapState, mapActions} from 'vuex'
 export default {
   computed: {
+    ...mapState('store', ['userDetails']),
     title() {
       let currentPath = this.$route.fullPath
       if(currentPath == '/' ) return 'Chat App'
       else if(currentPath == '/chat' ) return 'Chat'
       else if(currentPath == '/auth' ) return 'Authentication'
     }
+  },
+  methods: {
+    ...mapActions('store', ['logoutUser'])
   }
 }
 </script>
+
+<style lang="stylus">
+  .q-toolbar
+    .q-btn
+      line-height: 1.2
+</style>

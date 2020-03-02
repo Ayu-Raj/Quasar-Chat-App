@@ -42,33 +42,30 @@
 </template>
 
 <script>
+import { mapState, mapActions } from 'vuex'
 	export default {
 	  data() {
 	  	return {
 	  		newMessage: '',
-	  		messages: [
-	  			{
-	  				text: 'Hey Jim, how are you?',
-	  				from: 'me'
-	  			},
-	  			{
-	  				text: 'Good thanks, Danny! How are you?',
-	  				from: 'them'
-	  			},
-	  			{
-	  				text: 'Pretty good!',
-	  				from: 'me'
-	  			}
-	  		]
 	  	}
 	  },
+	  computed: {
+		  ...mapState('store', ['messages'])
+	  },
 	  methods: {
+		  ...mapActions('store', ['firebaseGetMessages', 'firebaseStopGettingMessages']),
 	  	sendMessage() {
 	  		this.messages.push({
 	  			text: this.newMessage,
 	  			from: 'me'
 	  		})
 	  	}
+	  },
+	  mounted() {
+		  this.firebaseGetMessages(this.$route.params.otherUserId)
+	  },
+	  destroyed() {
+		  this.firebaseStopGettingMessages()
 	  }
 	}
 </script>
